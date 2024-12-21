@@ -27,5 +27,30 @@ fun Application.configureRouting() {
                 text = tasks.tasksAsTable()
             )
         }
+        //add the following route
+        get("/tasks/byPriority/{priority}") {
+            val priorityAsText = call.parameters["priority"]
+            if (priorityAsText == null) {
+                call.respond(HttpStatusCode.BadRequest)
+                return@get
+            }
+
+            try {
+                val priority = Priority.valueOf(priorityAsText)
+                val tasks = TaskRepository.tasksByPriority(priority)
+
+                if (tasks.isEmpty()) {
+                    call.respond(HttpStatusCode.NotFound)
+                    return@get
+                }
+
+                call.respondText(
+                    contentType = ContentType.parse("text/html"),
+                    text = tasks.tasksAsTable()
+                )
+            } catch(ex: IllegalArgumentException) {
+                call.respond(HttpStatusCode.BadRequest)
+            }
+        }
     }
 }
