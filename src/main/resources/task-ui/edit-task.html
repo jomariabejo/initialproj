@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Task</title>
+</head>
+<body>
+<h1>Edit Task</h1>
+<form action="/tasks/edit/{taskId}" method="post">
+    <label for="name">Task Name:</label>
+    <input type="text" name="name" value="{taskName}" required/><br/><br/>
+
+    <label for="description">Description:</label>
+    <input type="text" name="description" value="{taskDescription}" required/><br/><br/>
+
+    <label for="priority">Priority:</label>
+    <select name="priority">
+        <option value="Low" {taskPriorityLow}>Low</option>
+        <option value="Medium" {taskPriorityMedium}>Medium</option>
+        <option value="High" {taskPriorityHigh}>High</option>
+    </select><br/><br/>
+
+    <button type="submit">Save Changes</button>
+</form>
+</body>
+</html>
